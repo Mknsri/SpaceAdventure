@@ -4,7 +4,7 @@
 bulletClass::bulletClass(int startX, int startY) {
 	
 	try {
-	objectTexture = LoadImage("C:\\Users\\make\\Documents\\bullet.png");
+	objectTexture = LoadImage("data\\bullet.png");
 	}
 	catch (const std::runtime_error &e){
         errorToFile(e.what());

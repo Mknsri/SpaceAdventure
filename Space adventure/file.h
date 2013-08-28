@@ -5,6 +5,7 @@
 #include <fstream>
 #include <string>
 
+// Writes error to debug.txt in data folder
 int errorToFile(std::string msg);
 
 #endif

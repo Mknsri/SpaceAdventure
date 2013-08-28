@@ -11,7 +11,10 @@ public:
 	// Render queue vector
 	std::vector<gameObject*> renderQueue;
 
+	// Push object into render queue
 	void pushIntoRenderQueue(gameObject* object);
+
+	// Draw everything in the render queue
 	void drawRenderQueue();
 
 };

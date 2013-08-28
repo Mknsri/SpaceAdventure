@@ -10,10 +10,15 @@
 class bulletClass : public gameObject
 {
 	public:
+		// bullet creator, position(x,y) as parameters
 		bulletClass(int x, int y);
 
+		// Update per frame
 		int updatePosition();
+
+		// Collision event
 		int collisionEvent();
+
 		~bulletClass();
 };
 

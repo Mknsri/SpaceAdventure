@@ -71,7 +71,6 @@
     <ClCompile Include="bulletClass.cpp" />
     <ClCompile Include="draw.cpp" />
     <ClCompile Include="Enemy.cpp" />
-    <ClCompile Include="events.cpp" />
     <ClCompile Include="file.cpp" />
     <ClCompile Include="gameObject.cpp" />
     <ClCompile Include="KeyboardHandler.cpp" />
@@ -86,7 +85,6 @@
     <ClInclude Include="bulletClass.h" />
     <ClInclude Include="draw.h" />
     <ClInclude Include="Enemy.h" />
-    <ClInclude Include="events.h" />
     <ClInclude Include="file.h" />
     <ClInclude Include="gameObject.h" />
     <ClInclude Include="KeyboardHandler.h" />

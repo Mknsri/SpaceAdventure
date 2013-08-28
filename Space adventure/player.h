@@ -3,17 +3,29 @@
 
 #include "gameObject.h"
 
+// Player object
 class playerClass : public gameObject 
 {
-	public:
+	private:
+		// Stats
 		int health;
-		bool fireDisabled;
-		int yVelocity, xVelocity;
+		
 
-	playerClass();
-	int collisionEvent();
-	void playerFire();
-	int updatePosition();
+	public:
+
+		playerClass();
+		
+		// If the player can fire
+		bool fireDisabled;
+
+		// Triggered if collisioncheck returns true
+		int collisionEvent();
+
+		// Player fires
+		void playerFire();
+		
+		// Update per frame
+		int updatePosition();
 };
 
 #endif

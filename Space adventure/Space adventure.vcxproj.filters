@@ -21,9 +21,6 @@
     <ClCompile Include="draw.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="events.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="file.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -57,9 +54,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="draw.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="events.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="file.h">

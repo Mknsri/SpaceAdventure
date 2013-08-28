@@ -8,7 +8,7 @@ Enemy::Enemy(enemyType eType)
 		case MORP:
 		break;
 		case DORP:
-			objectTexture = LoadImage("C:\\Users\\make\\documents\\dorp.png");
+			objectTexture = LoadImage("data\\dorp.png");
 		break;
 		case BENE:
 		break;

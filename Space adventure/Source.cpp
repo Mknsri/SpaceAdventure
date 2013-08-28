@@ -21,7 +21,6 @@
 #include <random>
 
 
-
 int main(int argc, char** argv){
 
 	initSDL();
@@ -37,12 +36,8 @@ int main(int argc, char** argv){
 
 	// Load assets
 	SDL_Texture* title = nullptr;
-	SDL_Texture* bg = nullptr;
-	SDL_Texture* bg2 = nullptr;
 	try {
-		bg = LoadImage("C:\\Users\\make\\Documents\\bg.png");
-		bg2 = LoadImage("C:\\Users\\make\\Documents\\bg2.png");
-		title = LoadImage("C:\\Users\\make\\Documents\\title.png");
+		title = LoadImage("data\\title.png");
 	}
 	catch (const std::runtime_error &e){
         errorToFile(e.what());
@@ -53,70 +48,69 @@ int main(int argc, char** argv){
 
 
 	// Game variables
-	
 	bool quit = false;
-	
-	int bgX = 0;
-	int bg2X = 0;
-	
 	int gameState = 0;
 	
-	SDL_Color nofiticationColor = {255, 255, 255};
-	textClass notificationText(nofiticationColor);
-
-	notificationText.x = 5;
-	notificationText.y = 5;
-
+	// Game classes
 	rendererClass gameRenderer;
-
-	
 	playerClass* playerObject = new playerClass;
-
 	KeyboardHandler keyboard;
+
+	// 2 scrolling backgrounds for parallax effect
+	Animation backgroundAnimation("data\\bg.png", 1, 0, 24);
+	backgroundAnimation.x = 0;
+	backgroundAnimation.y = 0;
+	Animation backgroundAnimation2("data\\bg2.png", 1, 0, 16);
+	backgroundAnimation2.x = 0;
+	backgroundAnimation2.y = 0;
 
 	// FPS capper
 	Timer frameTimer;
 	Timer capTimer;
-	std::stringstream capText;
 	int countedFrames = 0;
 
-	Animation testanimation("C:\\Users\\make\\Documents\\animtest.png", 4);
-	testanimation.x = 50;
-	testanimation.y = 50;
 
+	// Start counting frames since game start
 	frameTimer.Start();
 
 	while(keyboard.quitPressed == false) {	
 		
+		// Start counting frames since gameloop start
 		capTimer.Start();
 
+		// Clear screen
 		clearScreen();
+
 		// Drawn background
-		ApplySurface(bgX,0,bg);
-		ApplySurface(bgX + 960 ,0,bg);
-		
-		ApplySurface(bg2X,0,bg2);
-		ApplySurface(bg2X + 960 ,0,bg2);
-		bgX -= 2;
-		bg2X -= 4;
-		
+		backgroundAnimation.scrollAnimation(Animation::LEFT);
+		backgroundAnimation2.scrollAnimation(Animation::LEFT);
+
+		// Check gamestates
 		switch (gameState)
 		{
+			// Title screen
 			case 0:
 				ApplySurface( 20, 50, title);
+
+				// Check if the user presses Enter to start a game
+				if(keyboard.isPressed(SDL_SCANCODE_RETURN))
+					gameState = 1;
 				break;
+			// Start new game
 			case 1: 
 			{
+				// Start drawing player
 				gameRenderer.pushIntoRenderQueue(playerObject);
 				gameState = 2;
 				break;
 			}
+			// Start game
 			case 2:
 			{
+				// TODO: Randomly spawn enemies
 				std::random_device rng;
 				if ((rng() % 1000) == 1) {
-					Enemy::enemyType eType = Enemy::DORP;
-					gameRenderer.pushIntoRenderQueue(new Enemy(eType));
+					gameRenderer.pushIntoRenderQueue(new Enemy(Enemy::DORP));
 				}
 				
 				break;
@@ -133,31 +127,16 @@ int main(int argc, char** argv){
 			avgFPS = 0;
 		}
 		
+		// Handle keyboard for player
 		keyboard.handleKeyboardEvents(*playerObject, gameRenderer);
 
-		// Rendering
-		testanimation.playAnimation();
+		// Draw all the gameObjects
 		gameRenderer.drawRenderQueue();
 
-
+		// Update screen
 		updateScreen();
 
-		if (keyboard.isPressed(SDL_SCANCODE_RETURN) && gameState == 0) {
-			gameState = 1;
-		}
-
-		
-
-		
-
-		// Background reset if out of bounds
-		if(bgX < -960) {
-			bgX = 0;
-		}
-		if(bg2X < -960) {
-			bg2X = 0;
-		}
-
+		// Add a counted frame
 		++countedFrames;
 
 		//If frame finished early
@@ -170,6 +149,7 @@ int main(int argc, char** argv){
 
 	}
 
+	// Quit SDL
     SDL_Quit();
  
     return 0;

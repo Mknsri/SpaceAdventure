@@ -22,7 +22,9 @@ bool gameObject::checkCollision(gameObject * collObject) {
 	// Calculate object 1
 	collisionBox.x = x;
 	collisionBox.y = y;
+
     SDL_QueryTexture(objectTexture, NULL, NULL, &collisionBox.w, &collisionBox.h);
+
 	// buffer collisionbox
 	collisionBox.w -= collisionBuffer;
 	collisionBox.h -= collisionBuffer;

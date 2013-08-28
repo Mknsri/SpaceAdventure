@@ -1,26 +1,25 @@
 #include "draw.h"
 
-
-//Screen attributes
-const int SCREEN_WIDTH = 640;
-const int SCREEN_HEIGHT = 480;
-const int SCREEN_BPP = 32;
-
 SDL_Window *window = nullptr;
 SDL_Renderer *renderer = nullptr;
 
 int initSDL() {
+
+	// Init SDL and check for success
 	if (SDL_Init(SDL_INIT_EVERYTHING) == -1){
         std::cout << SDL_GetError() << std::endl;
         return 1;
     }
  
+	// Create window and check success
     window = SDL_CreateWindow("Space adventure", SDL_WINDOWPOS_CENTERED, 
         SDL_WINDOWPOS_CENTERED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
     if (window == nullptr){
         std::cout << SDL_GetError() << std::endl;
         return 2;
     }
+
+	// Create renderer and check for success
     renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED 
         | SDL_RENDERER_PRESENTVSYNC);
     if (renderer == nullptr){
@@ -39,14 +38,20 @@ int initSDL() {
 	return 0;
 }
 
+// Load image from file and returns texture
 SDL_Texture* LoadImage(std::string file){
+
     SDL_Texture* tex = nullptr;
     tex = IMG_LoadTexture(renderer, file.c_str());
+
+	// Check for errors
     if (tex == nullptr)
 		throw std::runtime_error("Failed to load image: " + file + IMG_GetError());
+
     return tex;
 }
 
+// Converts SDL_Surface to SDL_Texture and returns the texture
 SDL_Texture* surfaceIntoTexture(SDL_Surface* surface) {
 	SDL_Texture* texture = nullptr;
 	texture = SDL_CreateTextureFromSurface(renderer, surface);
@@ -57,11 +62,15 @@ SDL_Texture* surfaceIntoTexture(SDL_Surface* surface) {
 	return texture;
 }
 
+// Draw texture on screen
 void ApplySurface(int x, int y, SDL_Texture *tex, SDL_Rect* clip){
+
     SDL_Rect pos;
     pos.x = x;
     pos.y = y;
 
+	// If there are no frames,
+	// Pull height and width from texture
 	if( clip != nullptr )
 	{
 		pos.w = clip->w;
@@ -73,10 +82,12 @@ void ApplySurface(int x, int y, SDL_Texture *tex, SDL_Rect* clip){
     SDL_RenderCopy(renderer, tex, clip, &pos);
 }
 
+// Update screen
 void updateScreen() {
 	SDL_RenderPresent(renderer);
 }
 
+// Clearscreen
 void clearScreen() {
 	SDL_RenderClear(renderer);
 }
