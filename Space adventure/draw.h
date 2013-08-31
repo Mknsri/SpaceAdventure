@@ -10,8 +10,8 @@
 #include <vector>
 
 //Screen attributes
-const int SCREEN_WIDTH = 640;
-const int SCREEN_HEIGHT = 480;
+const int SCREEN_WIDTH = 800;
+const int SCREEN_HEIGHT = 600;
 const int SCREEN_BPP = 32;
 
 // Starts SDL
@@ -19,6 +19,7 @@ int initSDL();
 
 // Load texture from image
 SDL_Texture* LoadImage(std::string file);
+
 
 // Draw texture on surface
 void ApplySurface(int x, int y, SDL_Texture *tex, SDL_Rect* clip = nullptr);

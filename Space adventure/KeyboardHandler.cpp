@@ -76,16 +76,16 @@ void KeyboardHandler::handleKeyboardEvents(playerClass& playerObj, rendererClass
 
 					// Stops player movement
 					case SDLK_UP:
-						playerObj.yVelocity--;
+						playerObj.yVelocity = 0;
 					break;
 					case SDLK_DOWN:
-						playerObj.yVelocity--;
+						playerObj.yVelocity = 0;
 					break;
 					case SDLK_LEFT:
-						playerObj.yVelocity--;
+						playerObj.xVelocity = 0;
 					break;
 					case SDLK_RIGHT:
-						playerObj.yVelocity--;
+						playerObj.xVelocity = 0;
 					break;
 					default:
 					break;

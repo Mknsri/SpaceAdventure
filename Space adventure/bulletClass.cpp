@@ -10,26 +10,51 @@ bulletClass::bulletClass(int startX, int startY) {
         errorToFile(e.what());
 	}
 	
+	explosionAnim = new Animation("data\\explosionanim.png",5,0,12);
+
+	// Set deletion flag
 	deleteThis = false;
+
+	// Offset starting position
 	x = startX + 75;
 	y = startY + 30;
+
+	// Collision buffer 2px
 	collisionBuffer = 2;
+
+	// Enable collision
 	collisionEnabled = true;
+	collisionDetected = false;
 	
 }
 
 int bulletClass::updatePosition() {
+
+	
 	x += 5;
+
 	if (x > 640)
+		deleteThis = true;
+
+	if (explosionAnim->animationPlaying() && collisionDetected == true) {
+		objectTexture = nullptr;
+		explosionAnim->playAnimationOnce();
+	}
+	else if ( explosionAnim->animationPlaying() == false && collisionDetected == true)
 		deleteThis = true;
 
 	return 0;
 }
 
 bulletClass::~bulletClass() {
+	
 }
 
 int bulletClass::collisionEvent() {
-	deleteThis = true;
+
+	explosionAnim->x = x - 50;
+	explosionAnim->y = y - 50;
+	collisionDetected = true;
+
 	return 0;
 }

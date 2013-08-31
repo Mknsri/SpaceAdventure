@@ -16,6 +16,9 @@ class gameObject
 		// Flag for deleting the object in the next frame
 		bool deleteThis;
 
+		// Flag for detected collision
+		bool collisionDetected;
+
 		// Position integers
 		int x, y;
 

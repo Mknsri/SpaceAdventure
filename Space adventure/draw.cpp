@@ -51,6 +51,8 @@ SDL_Texture* LoadImage(std::string file){
     return tex;
 }
 
+
+
 // Converts SDL_Surface to SDL_Texture and returns the texture
 SDL_Texture* surfaceIntoTexture(SDL_Surface* surface) {
 	SDL_Texture* texture = nullptr;
@@ -75,9 +77,9 @@ void ApplySurface(int x, int y, SDL_Texture *tex, SDL_Rect* clip){
 	{
 		pos.w = clip->w;
 		pos.h = clip->h;
-	}
-	else
+	} else {
 		SDL_QueryTexture(tex, NULL, NULL, &pos.w, &pos.h);
+	}
 
     SDL_RenderCopy(renderer, tex, clip, &pos);
 }

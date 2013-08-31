@@ -15,12 +15,15 @@ playerClass::playerClass() {
 	collisionBuffer = 5;
 
 	// Init position
-	x = 10;
-	y = 10;
+	x = 35;
+	y = 35;
 
 	// Init speed
 	xVelocity = 0;
 	yVelocity = 0;
+
+	// Enable player fire
+	fireDisabled = false;
 
 	// Set object not to be deleted
 	deleteThis = false;
@@ -53,7 +56,7 @@ int playerClass::updatePosition() {
 		y = 10;
 	
 	// Set speed
-		y += yVelocity * maxSpeed;
+	y += yVelocity * maxSpeed;
 
 	return 0;
 }

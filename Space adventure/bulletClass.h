@@ -4,6 +4,7 @@
 #include "draw.h"
 #include "file.h"
 #include "gameObject.h"
+#include "Animation.h"
 
 #include <stdexcept>
 
@@ -18,6 +19,8 @@ class bulletClass : public gameObject
 
 		// Collision event
 		int collisionEvent();
+
+		Animation *explosionAnim;
 
 		~bulletClass();
 };

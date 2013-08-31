@@ -1,5 +1,6 @@
 #include "rendererClass.h"
 
+
 // Push gameobject into render queue
 void rendererClass::pushIntoRenderQueue(gameObject* object) {
 		renderQueue.push_back(object);
@@ -8,6 +9,16 @@ void rendererClass::pushIntoRenderQueue(gameObject* object) {
 // Renderloop - draws everything in renderqueue
 void rendererClass::drawRenderQueue() {
 
+	// Iterators
+	std::vector<gameObject*>::iterator it;
+
+	for(it = renderQueue.begin(); it != renderQueue.end();it++) {
+		// Draw all objects
+		(*it)->drawObject();
+	}
+}
+
+void rendererClass::handleLogicQueue() {
 	// Iterators
 	std::vector<gameObject*>::iterator it;
 	std::vector<gameObject*>::iterator collIt;
@@ -24,19 +35,17 @@ void rendererClass::drawRenderQueue() {
 				}
 			}
 		}
-
-		// Update position for all objects
-		(*it)->updatePosition();
-
-		// Draw all objects
-		(*it)->drawObject();
+		
+	// Update position for all objects
+	(*it)->updatePosition();
 
 	// Delete objects that are flagged for deletion
 		if ((*it)->deleteThis == true) {
 			delete *it;
 			it = renderQueue.erase(it);
-		}
-		else
+		} else {
 			it++;
+		}
+		
 	}
 }

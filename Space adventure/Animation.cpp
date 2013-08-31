@@ -36,21 +36,45 @@ Animation::Animation(std::string filePath, int frames, int frameRows, int animRa
 		}
 	}
 	
+	
 	// Initialize the start frame and start time
 	currentFrame = 0;
-	animationStartTime = SDL_GetTicks();
+	animationTime = SDL_GetTicks();
+	framesPlayed = 0;
 }
 
 bool Animation::playAnimation() {
-	// Calculate the frame that we need to draw
-	int currentFrame = ((SDL_GetTicks() - animationStartTime) * animationRate / 1000) % totalFrames;
-
+	
 	// Draw the animation with the calculated frame
 	ApplySurface(x,y, animationTexture, &animationClips[currentFrame]);
+
+	// Calculate the frame that we need to draw
+	if (SDL_GetTicks() > (animationTime + (animationRate * 10))) {
+	
+		if (currentFrame == totalFrames)
+			currentFrame = 0;
+		else
+			currentFrame++;
+
+		
+		animationTime = SDL_GetTicks();
+	}
+	
+	if (framesPlayed < currentFrame)
+		framesPlayed = currentFrame;
+	
 
 	return true;
 }
 
+bool Animation::playAnimationOnce() {
+	if (animationPlaying()) {
+		playAnimation();
+	}
+
+	return true;
+
+}
 
 bool Animation::scrollAnimation(scrollDirection scrollDir) {
 	
@@ -101,20 +125,12 @@ bool Animation::scrollAnimation(scrollDirection scrollDir) {
 	// Update the location of the animation
 	// for the scrolling effect, here we use the multiplier
 	if (scrollDir == UP || scrollDir == DOWN)
-		y += directionMultiplier * ((SDL_GetTicks() - animationStartTime) * animationRate / 100);
+		y += directionMultiplier * ((SDL_GetTicks() - animationTime) * animationRate / 100);
 
 	else if (scrollDir == LEFT || scrollDir == RIGHT)		
-		x += (directionMultiplier * (((SDL_GetTicks() - animationStartTime) * animationRate / 100)));
+		x += directionMultiplier * ((SDL_GetTicks() - animationTime) * animationRate / 100);
 	
-	//debug
-	textClass debugText;
-	debugText.x = 5;
-	debugText.y = 5;
-	std::stringstream mostebin;
-	mostebin << textureW*-1 << "  " << x;
-	debugText.setMessage(mostebin);
-	debugText.drawObject();
-
+	
 	// Check that the texture doesn't go out of bounds
 	// vertically
 	if ( y > textureH)
@@ -131,11 +147,20 @@ bool Animation::scrollAnimation(scrollDirection scrollDir) {
 		x += textureW;
 	}
 
-
-	animationStartTime = SDL_GetTicks();
+	animationTime = SDL_GetTicks();
 	return true;
 }
 
 Animation::~Animation(void)
 {
+}
+
+// Check if the animation is still playing
+bool Animation::animationPlaying() {
+	if (framesPlayed < totalFrames) {
+		return true;
+	}
+	else {
+		return false;
+	}
 }

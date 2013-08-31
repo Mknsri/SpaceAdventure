@@ -1,7 +1,6 @@
 #include "player.h"
 #include "file.h"
 #include "draw.h"
-#include "events.h"
 #include "bulletClass.h"
 #include "rendererClass.h"
 #include "textClass.h"
@@ -69,9 +68,12 @@ int main(int argc, char** argv){
 	Timer capTimer;
 	int countedFrames = 0;
 
-
 	// Start counting frames since game start
 	frameTimer.Start();
+
+	Animation testi("data\\explosionanim.png",5);
+	testi.x = 100;
+	testi.y = 100;
 
 	while(keyboard.quitPressed == false) {	
 		
@@ -109,7 +111,7 @@ int main(int argc, char** argv){
 			{
 				// TODO: Randomly spawn enemies
 				std::random_device rng;
-				if ((rng() % 1000) == 1) {
+				if ((rng() % 100) == 1) {
 					gameRenderer.pushIntoRenderQueue(new Enemy(Enemy::DORP));
 				}
 				
@@ -118,7 +120,6 @@ int main(int argc, char** argv){
 			default:
 				break;
 		}
-		
 		
 		//Calculate and correct fps
 		float avgFPS = countedFrames / ( frameTimer.getTicks() / 1000.f );
@@ -133,8 +134,12 @@ int main(int argc, char** argv){
 		// Draw all the gameObjects
 		gameRenderer.drawRenderQueue();
 
+		// Handle game logic
+		gameRenderer.handleLogicQueue();
+		
 		// Update screen
 		updateScreen();
+		
 
 		// Add a counted frame
 		++countedFrames;

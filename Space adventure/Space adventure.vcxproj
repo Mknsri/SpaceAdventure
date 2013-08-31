@@ -93,6 +93,21 @@
     <ClInclude Include="textClass.h" />
     <ClInclude Include="Timer.h" />
   </ItemGroup>
+  <ItemGroup>
+    <Image Include="data\bg.png" />
+    <Image Include="data\bg2.png" />
+    <Image Include="data\bullet.png" />
+    <Image Include="data\dorp.png" />
+    <Image Include="data\explosionanim.png" />
+    <Image Include="data\kalalus.png" />
+    <Image Include="data\title.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="data\debug.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Font Include="data\font.ttf" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

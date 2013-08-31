@@ -1,7 +1,6 @@
 #ifndef ANIMATION_H
 #define ANIMATION_H
 
-#include "textClass.h"
 #include "draw.h"
 
 #include "SDL.h"
@@ -21,9 +20,10 @@ public:
 	// Tracks frames
 	int currentFrame;
 	int totalFrames;
+	int framesPlayed;
 
 	// Control the speed of animation
-	Uint32 animationStartTime;
+	Uint32 animationTime;
 	int animationRate;
 
 	// Animation constructor, load texture, frames, rows in sprite file, animationrate
@@ -39,6 +39,10 @@ public:
 
 	// Plays animation
 	bool playAnimation();
+	bool playAnimationOnce();
+
+	// Check if animation playing, returns TRUE if yes
+	bool animationPlaying();
 	
 };
 
