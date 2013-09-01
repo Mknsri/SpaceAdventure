@@ -71,9 +71,23 @@ int main(int argc, char** argv){
 	// Start counting frames since game start
 	frameTimer.Start();
 
-	Animation testi("data\\explosionanim.png",5);
-	testi.x = 100;
-	testi.y = 100;
+	// Notification text object
+	std::stringstream notificationText;
+	textClass notification;
+	notification.x = 150;
+	notification.y = 150;
+
+	//Debug
+	std::stringstream teksti;
+	textClass debugtext;
+	debugtext.x = 200;
+	debugtext.y = 200;
+
+	Animation testi("data\\kalalus_death.png",8);
+	testi.x = 5;
+	testi.y = 5;
+
+	// end debug
 
 	while(keyboard.quitPressed == false) {	
 		
@@ -102,7 +116,10 @@ int main(int argc, char** argv){
 			case 1: 
 			{
 				// Start drawing player
+				playerObject->newGame();
+
 				gameRenderer.pushIntoRenderQueue(playerObject);
+				playerObject->fireDisabled = false;
 				gameState = 2;
 				break;
 			}
@@ -110,13 +127,39 @@ int main(int argc, char** argv){
 			case 2:
 			{
 				// TODO: Randomly spawn enemies
+				//testi.playAnimationOnce();
+
+
 				std::random_device rng;
 				if ((rng() % 100) == 1) {
 					gameRenderer.pushIntoRenderQueue(new Enemy(Enemy::DORP));
 				}
 				
+				if (playerObject->isPlayerAlive() == false) {
+					gameState = 3;
+				}
+
 				break;
 			}
+			// Death screen
+			case 3:
+				// Disable player fire
+				playerObject->fireDisabled = true;
+
+				// Set you are dead text
+				notificationText.str("");
+				notificationText << "You are dead! Play again? ( Y / N )";
+				notification.setMessage(notificationText);
+				notification.drawObject();
+
+				if(keyboard.isPressed(SDL_SCANCODE_Y)) {
+					gameState = 1;
+				}
+				else if (keyboard.isPressed(SDL_SCANCODE_N)) {
+					quit = true;
+				}
+
+				break;
 			default:
 				break;
 		}

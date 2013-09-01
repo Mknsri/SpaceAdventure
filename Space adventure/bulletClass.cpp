@@ -10,7 +10,7 @@ bulletClass::bulletClass(int startX, int startY) {
         errorToFile(e.what());
 	}
 	
-	explosionAnim = new Animation("data\\explosionanim.png",5,0,12);
+	explosionAnim = new Animation("data\\explosionanim.png",5,0,6);
 
 	// Set deletion flag
 	deleteThis = false;

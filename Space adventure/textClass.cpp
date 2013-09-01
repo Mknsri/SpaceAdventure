@@ -38,8 +38,9 @@ textClass::textClass() {
 void textClass::setMessage(std::stringstream &message, bool appendText) {
 
 	// If were not appending text, set the message to empty
-	if (!appendText)
+	if (!appendText) {
 		textMessage = "";
+	}
 
 	// Set the message from parameter
 	textMessage = message.str();

@@ -18,6 +18,7 @@ class gameObject
 
 		// Flag for detected collision
 		bool collisionDetected;
+		Uint32 collisionTime;
 
 		// Position integers
 		int x, y;
@@ -44,7 +45,7 @@ class gameObject
 		virtual int collisionEvent();
 
 		// Draws object
-		int drawObject();
+		virtual int drawObject();
 
 		// Update per frame
 		virtual int updatePosition();

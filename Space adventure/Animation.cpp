@@ -36,7 +36,10 @@ Animation::Animation(std::string filePath, int frames, int frameRows, int animRa
 		}
 	}
 	
-	
+	// Splitting the sheet causes makes one empty
+	// frame, so remove that index
+	totalFrames--;
+
 	// Initialize the start frame and start time
 	currentFrame = 0;
 	animationTime = SDL_GetTicks();
@@ -70,10 +73,11 @@ bool Animation::playAnimation() {
 bool Animation::playAnimationOnce() {
 	if (animationPlaying()) {
 		playAnimation();
+		return false;
 	}
-
-	return true;
-
+	else {
+		return true;
+	}
 }
 
 bool Animation::scrollAnimation(scrollDirection scrollDir) {
@@ -146,7 +150,6 @@ bool Animation::scrollAnimation(scrollDirection scrollDir) {
 	else if ( x < (textureW * -1)) {
 		x += textureW;
 	}
-
 	animationTime = SDL_GetTicks();
 	return true;
 }
