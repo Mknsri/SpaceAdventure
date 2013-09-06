@@ -1,7 +1,6 @@
 #ifndef RENDERER_H 
 #define RENDERER_H
 
-#include "file.h"
 #include "draw.h"
 #include "gameObject.h"
 #include "Animation.h"

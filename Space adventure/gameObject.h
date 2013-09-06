@@ -2,7 +2,6 @@
 #define GAMEOBJECT_H
 
 #include "draw.h"
-#include "file.h"
 
 #include "SDL.h"
 

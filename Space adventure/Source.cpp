@@ -1,5 +1,4 @@
 #include "player.h"
-#include "file.h"
 #include "draw.h"
 #include "bulletClass.h"
 #include "rendererClass.h"
@@ -8,6 +7,8 @@
 #include "KeyboardHandler.h"
 #include "Enemy.h"
 #include "Animation.h"
+#include "DataHandler.h"
+#include "Level.h"
 
 #include "SDL.h"
 #include "SDL_image.h"
@@ -23,27 +24,17 @@
 int main(int argc, char** argv){
 
 	initSDL();
-
-	if (TTF_Init() == -1){
-    std::cout << TTF_GetError() << std::endl;
-    return 2;
-}
 	
 	const int SCREEN_FPS = 60;
 	const int SCREEN_TICK_PER_FRAME = 1000 / SCREEN_FPS;
 
+	// Resource handler
+	DataHandler gameDataHandler;
 
 	// Load assets
 	SDL_Texture* title = nullptr;
-	try {
-		title = LoadImage("data\\title.png");
-	}
-	catch (const std::runtime_error &e){
-        errorToFile(e.what());
-		return 4;
-    }
-
-
+	title = LoadImage("data\\title.png");
+	
 
 
 	// Game variables
@@ -55,13 +46,6 @@ int main(int argc, char** argv){
 	playerClass* playerObject = new playerClass;
 	KeyboardHandler keyboard;
 
-	// 2 scrolling backgrounds for parallax effect
-	Animation backgroundAnimation("data\\bg.png", 1, 0, 24);
-	backgroundAnimation.x = 0;
-	backgroundAnimation.y = 0;
-	Animation backgroundAnimation2("data\\bg2.png", 1, 0, 16);
-	backgroundAnimation2.x = 0;
-	backgroundAnimation2.y = 0;
 
 	// FPS capper
 	Timer frameTimer;
@@ -83,13 +67,14 @@ int main(int argc, char** argv){
 	debugtext.x = 200;
 	debugtext.y = 200;
 
-	Animation testi("data\\kalalus_death.png",8);
-	testi.x = 5;
-	testi.y = 5;
 
 	// end debug
 
-	while(keyboard.quitPressed == false) {	
+	Level level1;
+	level1.loadLevel("data\\level1.dat");
+
+
+	while(keyboard.quitPressed == false && quit == false) {	
 		
 		// Start counting frames since gameloop start
 		capTimer.Start();
@@ -97,9 +82,6 @@ int main(int argc, char** argv){
 		// Clear screen
 		clearScreen();
 
-		// Drawn background
-		backgroundAnimation.scrollAnimation(Animation::LEFT);
-		backgroundAnimation2.scrollAnimation(Animation::LEFT);
 
 		// Check gamestates
 		switch (gameState)
@@ -109,32 +91,30 @@ int main(int argc, char** argv){
 				ApplySurface( 20, 50, title);
 
 				// Check if the user presses Enter to start a game
-				if(keyboard.isPressed(SDL_SCANCODE_RETURN))
+				if(keyboard.isPressed(SDL_SCANCODE_RETURN)) {
 					gameState = 1;
+					// Start drawing player
+					gameRenderer.pushIntoRenderQueue(playerObject);
+				}
 				break;
 			// Start new game
 			case 1: 
 			{
 				// Start drawing player
 				playerObject->newGame();
-
-				gameRenderer.pushIntoRenderQueue(playerObject);
 				playerObject->fireDisabled = false;
+				
+				// Start level
+				level1.initLevel();
+				
 				gameState = 2;
 				break;
 			}
 			// Start game
 			case 2:
 			{
-				// TODO: Randomly spawn enemies
-				//testi.playAnimationOnce();
+				level1.playLevel(gameRenderer);
 
-
-				std::random_device rng;
-				if ((rng() % 100) == 1) {
-					gameRenderer.pushIntoRenderQueue(new Enemy(Enemy::DORP));
-				}
-				
 				if (playerObject->isPlayerAlive() == false) {
 					gameState = 3;
 				}

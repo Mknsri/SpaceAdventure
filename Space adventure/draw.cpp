@@ -35,6 +35,13 @@ int initSDL() {
 		return 4;
 	}
 
+	//Initialize TTF module
+	
+	if (TTF_Init() == -1){
+		std::cout << TTF_GetError() << std::endl;
+    return 2;
+	}
+
 	return 0;
 }
 

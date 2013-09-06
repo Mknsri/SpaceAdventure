@@ -4,7 +4,6 @@
 #include "player.h"
 #include "rendererClass.h"
 #include "bulletClass.h"
-#include "file.h"
 #include "Enemy.h"
 
 #include "SDL.h"

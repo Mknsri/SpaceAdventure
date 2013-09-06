@@ -2,7 +2,6 @@
 #define BULLET_H
 
 #include "draw.h"
-#include "file.h"
 #include "gameObject.h"
 #include "Animation.h"
 
@@ -19,8 +18,6 @@ class bulletClass : public gameObject
 
 		// Collision event
 		int collisionEvent();
-
-		Animation *explosionAnim;
 
 		~bulletClass();
 };

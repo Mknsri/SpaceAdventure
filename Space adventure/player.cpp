@@ -3,18 +3,13 @@
 playerClass::playerClass() {
 
 	// Load the textures for player
-	try { 
-		objectTexture = LoadImage("data\\kalalus.png");
-		playerHealthIcon = LoadImage("data\\health.png");
+	objectTexture = LoadImage("data\\kalalus.png");
+	playerHealthIcon = LoadImage("data\\health.png");
 
-		// Load player animations
-		playerAnimIdle = new Animation("data\\kalalus_idle2.png",10);
-		playerAnimHurt = new Animation("data\\kalalus_hurt.png",4);
-		playerAnimDeath = new Animation("data\\kalalus_death.png",8);
-	}
-	catch (const std::runtime_error &e){
-        errorToFile(e.what());
-	}
+	// Load player animations
+	playerAnimIdle = new Animation("data\\kalalus_idle2.png",10);
+	playerAnimHurt = new Animation("data\\kalalus_hurt.png",4);
+	playerAnimDeath = new Animation("data\\kalalus_death.png",8);
 
 	// Set player health
 	health = 3;
@@ -83,7 +78,9 @@ int playerClass::updatePosition() {
 	if (collisionDetected && (SDL_GetTicks() < collisionTime + 700)) {
 		collisionEnabled = false;
 	} else if (collisionDetected && (SDL_GetTicks() > collisionTime + 700)) {
-		collisionEnabled = true;
+		if (health != 0) {
+			collisionEnabled = true;
+		}
 		collisionDetected = false;
 	}
 
@@ -105,8 +102,11 @@ int playerClass::drawObject() {
 	// Play animations
 	if (collisionDetected) {
 		playerAnimHurt->playAnimation();
+		if (health == 0) {
+			collisionEnabled = false;
+		}
 	} 
-	else if(health < 1) {
+	else if(health == 0) {
 		playerDeath();
 	} 
 	else {
@@ -130,14 +130,13 @@ bool playerClass::isPlayerAlive() {
 }
 
 void playerClass::playerDeath() {
+	collisionEnabled = false;
 	// Wait for the animation play
 	playerAnimDeath->x = x-25;
 	playerAnimDeath->y = y-50;
-	if (!playerAnimDeath->playAnimationOnce()) {
-		
-	}
-	else
+	if (playerAnimDeath->playAnimationOnce()) {
 		alive = false;
+	}
 
 
 }
@@ -147,18 +146,16 @@ void playerClass::newGame() {
 	health = 3;
 	alive = true;
 
-	// Collisionbuffer, the pixel amount the collisionbox 
-	// is feathered from the actual texture size
-	collisionBuffer = 5;
-
 	// Init position
 	x = 35;
 	y = 35;
 
-	// Animation position
+	// Reset animations
 	playerAnimIdle->x = x;
 	playerAnimIdle->y = y;
 	 
+	playerAnimDeath->framesPlayed = 0;
+
 	// Init speed
 	xVelocity = 0;
 	yVelocity = 0;
@@ -166,12 +163,6 @@ void playerClass::newGame() {
 	// Disable player fire in title screen
 	fireDisabled = true;
 
-	// Set object not to be deleted
-	deleteThis = false;
-
-	// Max speed
-	maxSpeed = 5;
-	
 	// Enable collision
 	collisionEnabled = true;
 	collisionDetected = false;

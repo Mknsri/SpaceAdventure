@@ -13,8 +13,8 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
-    <Filter Include="Game data">
-      <UniqueIdentifier>{ce584719-d6d8-4441-b0b1-dbe66664a592}</UniqueIdentifier>
+    <Filter Include="Levels">
+      <UniqueIdentifier>{e12015ce-3d4b-4e9d-8fc8-90443ba720b6}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -22,9 +22,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="draw.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="file.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="bulletClass.cpp">
@@ -54,12 +51,18 @@
     <ClCompile Include="Animation.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Level.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="DataHandler.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="LevelEvent.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="draw.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="file.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="player.h">
@@ -89,38 +92,14 @@
     <ClInclude Include="Animation.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-  </ItemGroup>
-  <ItemGroup>
-    <Image Include="data\bg.png">
-      <Filter>Game data</Filter>
-    </Image>
-    <Image Include="data\bg2.png">
-      <Filter>Game data</Filter>
-    </Image>
-    <Image Include="data\bullet.png">
-      <Filter>Game data</Filter>
-    </Image>
-    <Image Include="data\dorp.png">
-      <Filter>Game data</Filter>
-    </Image>
-    <Image Include="data\kalalus.png">
-      <Filter>Game data</Filter>
-    </Image>
-    <Image Include="data\title.png">
-      <Filter>Game data</Filter>
-    </Image>
-    <Image Include="data\explosionanim.png">
-      <Filter>Game data</Filter>
-    </Image>
-  </ItemGroup>
-  <ItemGroup>
-    <Text Include="data\debug.txt">
-      <Filter>Game data</Filter>
-    </Text>
-  </ItemGroup>
-  <ItemGroup>
-    <Font Include="data\font.ttf">
-      <Filter>Game data</Filter>
-    </Font>
+    <ClInclude Include="Level.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="DataHandler.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="LevelEvent.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

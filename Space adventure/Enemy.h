@@ -2,6 +2,7 @@
 #define ENEMY_H
 
 #include "gameobject.h"
+#include "Animation.h"
 
 #include <random>
 
@@ -13,8 +14,11 @@ public:
 	// Enemy typs
 	enum enemyType { MORP, DORP, BENE, MONSTRO };
 
-	// Constructor, enemy type as parameter
-	Enemy(enemyType eType);
+	
+	Animation *explosionAnim;
+
+	// Constructor, enemy type as parameter and optional start position
+	Enemy(enemyType eType, int startY = 0);
 	~Enemy(void);
 
 	// Collision event

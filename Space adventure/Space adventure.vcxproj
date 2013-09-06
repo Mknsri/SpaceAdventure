@@ -43,12 +43,12 @@
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>C:\Users\make\Downloads\SDL2_image-devel-2.0.0-VC %282%29\SDL2_image-2.0.0\include;C:\Users\make\Downloads\SDL2-devel-2.0.0-VC\SDL2-2.0.0\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Users\make\Downloads\zlib128-dll\include;C:\Users\make\Downloads\SDL2_image-devel-2.0.0-VC %282%29\SDL2_image-2.0.0\include;C:\Users\make\Downloads\SDL2-devel-2.0.0-VC\SDL2-2.0.0\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>C:\Users\make\Downloads\SDL2_image-devel-2.0.0-VC %282%29\SDL2_image-2.0.0\lib\x86;C:\Users\make\Downloads\SDL2-devel-2.0.0-VC\SDL2-2.0.0\lib\x86;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>C:\Users\make\Downloads\zlib128-dll\lib;C:\Users\make\Downloads\SDL2_image-devel-2.0.0-VC %282%29\SDL2_image-2.0.0\lib\x86;C:\Users\make\Downloads\SDL2-devel-2.0.0-VC\SDL2-2.0.0\lib\x86;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>SDL2.lib;SDL2main.lib;SDL2_image.lib;SDL2_ttf.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <SubSystem>Windows</SubSystem>
     </Link>
@@ -69,11 +69,13 @@
   <ItemGroup>
     <ClCompile Include="Animation.cpp" />
     <ClCompile Include="bulletClass.cpp" />
+    <ClCompile Include="DataHandler.cpp" />
     <ClCompile Include="draw.cpp" />
     <ClCompile Include="Enemy.cpp" />
-    <ClCompile Include="file.cpp" />
     <ClCompile Include="gameObject.cpp" />
     <ClCompile Include="KeyboardHandler.cpp" />
+    <ClCompile Include="Level.cpp" />
+    <ClCompile Include="LevelEvent.cpp" />
     <ClCompile Include="player.cpp" />
     <ClCompile Include="rendererClass.cpp" />
     <ClCompile Include="Source.cpp" />
@@ -83,30 +85,17 @@
   <ItemGroup>
     <ClInclude Include="Animation.h" />
     <ClInclude Include="bulletClass.h" />
+    <ClInclude Include="DataHandler.h" />
     <ClInclude Include="draw.h" />
     <ClInclude Include="Enemy.h" />
-    <ClInclude Include="file.h" />
     <ClInclude Include="gameObject.h" />
     <ClInclude Include="KeyboardHandler.h" />
+    <ClInclude Include="Level.h" />
+    <ClInclude Include="LevelEvent.h" />
     <ClInclude Include="player.h" />
     <ClInclude Include="rendererClass.h" />
     <ClInclude Include="textClass.h" />
     <ClInclude Include="Timer.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <Image Include="data\bg.png" />
-    <Image Include="data\bg2.png" />
-    <Image Include="data\bullet.png" />
-    <Image Include="data\dorp.png" />
-    <Image Include="data\explosionanim.png" />
-    <Image Include="data\kalalus.png" />
-    <Image Include="data\title.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Text Include="data\debug.txt" />
-  </ItemGroup>
-  <ItemGroup>
-    <Font Include="data\font.ttf" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
