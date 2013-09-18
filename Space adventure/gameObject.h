@@ -19,6 +19,13 @@ class gameObject
 		bool collisionDetected;
 		Uint32 collisionTime;
 
+		// Type for collision ignoring
+		std::string objectType;
+
+		
+		// Point worth
+		int pointWorth;
+
 		// Position integers
 		int x, y;
 
@@ -48,6 +55,11 @@ class gameObject
 
 		// Update per frame
 		virtual int updatePosition();
+		
+		// Add to players score
+		virtual void addScore(int points);
+
+
 };
 
 #endif

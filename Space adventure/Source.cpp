@@ -58,8 +58,8 @@ int main(int argc, char** argv){
 	// Notification text object
 	std::stringstream notificationText;
 	textClass notification;
-	notification.x = 150;
-	notification.y = 150;
+	notification.x = 120;
+	notification.y = 120;
 
 	//Debug
 	std::stringstream teksti;
@@ -114,6 +114,8 @@ int main(int argc, char** argv){
 			case 2:
 			{
 				level1.playLevel(gameRenderer);
+
+				playerObject->displayScore();
 
 				if (playerObject->isPlayerAlive() == false) {
 					gameState = 3;

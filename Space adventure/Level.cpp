@@ -40,13 +40,11 @@ void Level::loadLevel(std::string fileName) {
 			// Load the asset
 			loadAsset(assetToken, path);
 
-			errorfile.logErrorToFile(errorstream << "Token:" << assetToken << " Path:" << path);
 		
 		}
 		
 		// if we reach events, stop assetloading
 		if (line == "EVENTS") {
-			errorfile.logErrorToFile(errorstream << "START EVENTS" << '\n');
 			assetsLoaded = true;
 		}
 
@@ -64,7 +62,6 @@ void Level::loadLevel(std::string fileName) {
 			// Send event to eventqueue
 			LEvent.push_back(new LevelEvent(objectY, eventTime, eventType));
 
-			errorfile.logErrorToFile(errorstream << "Token:" << eventTime << " Event type:" << eventType << " Object y:" << objectY);
 		}
 	}
 

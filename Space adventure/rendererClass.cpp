@@ -1,5 +1,8 @@
 #include "rendererClass.h"
 
+rendererClass::rendererClass() { 
+	scroreToBeAdded = 0;
+}
 
 // Push gameobject into render queue
 void rendererClass::pushIntoRenderQueue(gameObject* object) {
@@ -23,19 +26,38 @@ void rendererClass::handleLogicQueue() {
 	std::vector<gameObject*>::iterator it;
 	std::vector<gameObject*>::iterator collIt;
 
+
 	for(it = renderQueue.begin(); it != renderQueue.end();) {
 		// Object collisions
 		for (collIt = renderQueue.begin(); collIt != renderQueue.end(); collIt++) {
-			// If objects collide and both have collisionEnabled set to true			
-			if( ((*it)->checkCollision(*collIt)) && ((*it)->collisionEnabled && (*collIt)->collisionEnabled)) {
-				if (*it != *collIt) {
-					// Do collision events for both object
-					(*it)->collisionEvent();
-					(*collIt)->collisionEvent();
+			// objects of same objectType colliding will be ignored
+			if ((*it)->objectType != (*collIt)->objectType) {
+				// If objects collide and both have collisionEnabled set to true
+				if( ((*it)->checkCollision(*collIt)) && ((*it)->collisionEnabled && (*collIt)->collisionEnabled)) {
+					if (*it != *collIt) {
+
+						// Add scores if bullet and enemy collide
+						if ((*it)->objectType == "bullet" && (*collIt)->objectType == "enemy") {
+							scroreToBeAdded += (*collIt)->pointWorth;
+						}
+						else if ((*it)->objectType == "enemy" && (*collIt)->objectType == "bullet") {
+							scroreToBeAdded += (*it)->pointWorth;
+						}
+
+						// Do collision events for both object
+						(*it)->collisionEvent();
+						(*collIt)->collisionEvent();
+					}
 				}
 			}
 		}
-		
+	
+	// Add scores to player score, and reset the counter
+	if ((*it)->objectType == "player" && scroreToBeAdded != 0) {
+		(*it)->addScore(scroreToBeAdded);
+		scroreToBeAdded = 0;
+	}
+
 	// Update position for all objects
 	(*it)->updatePosition();
 

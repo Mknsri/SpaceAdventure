@@ -13,7 +13,12 @@ public:
 
 	// Queue for game logic
 	std::vector<gameObject*> logicQueue;
+	
+	// Integer for score adding
+	int scroreToBeAdded;
 
+
+	rendererClass();
 
 	// Push object into render queue
 	void pushIntoRenderQueue(gameObject* object);

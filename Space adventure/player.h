@@ -1,6 +1,7 @@
 #ifndef PLAYER_H 
 #define PLAYER_H
 
+#include "textClass.h"
 #include "gameObject.h"
 #include "Animation.h"
 
@@ -11,6 +12,10 @@ class playerClass : public gameObject
 		// Stats
 		int health;
 		bool alive;
+		int score;
+		
+		// Player score text
+		textClass *scoreText;
 
 		// Player animations
 		Animation* playerAnimIdle;
@@ -45,6 +50,12 @@ class playerClass : public gameObject
 
 		// Player death
 		void playerDeath();
+
+		// Display players score
+		void displayScore();
+
+		void addScore(int points);
+
 };
 
 #endif

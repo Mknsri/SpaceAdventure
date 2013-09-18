@@ -17,11 +17,13 @@ playerClass::playerClass() {
 
 	// Collisionbuffer, the pixel amount the collisionbox 
 	// is feathered from the actual texture size
-	collisionBuffer = 5;
+	collisionBuffer = 10;
 
 	// Init position
 	x = 35;
 	y = 35;
+
+	objectType = "player";
 
 	// Animation position
 	playerAnimIdle->x = x;
@@ -43,6 +45,14 @@ playerClass::playerClass() {
 	// Enable collision
 	collisionEnabled = true;
 	collisionDetected = false;
+
+
+	// Set score
+	score = 10;
+	
+	scoreText = new textClass();
+
+
 }
 
 void playerClass::playerFire() {
@@ -78,7 +88,7 @@ int playerClass::updatePosition() {
 	if (collisionDetected && (SDL_GetTicks() < collisionTime + 700)) {
 		collisionEnabled = false;
 	} else if (collisionDetected && (SDL_GetTicks() > collisionTime + 700)) {
-		if (health != 0) {
+		if (health > 0) {
 			collisionEnabled = true;
 		}
 		collisionDetected = false;
@@ -92,7 +102,10 @@ int playerClass::collisionEvent()  {
 
 	collisionTime = SDL_GetTicks();
 	collisionDetected = true;
-	health--;
+
+	if (health > 0) {
+		health--;
+	}
 
 	return 0;
 }
@@ -167,4 +180,22 @@ void playerClass::newGame() {
 	collisionEnabled = true;
 	collisionDetected = false;
 
+}
+
+void playerClass::displayScore() {
+
+	std::stringstream scoreStream;
+	scoreStream.str("");	
+	scoreStream << score;
+	
+	scoreText->setMessage(scoreStream);
+	scoreText->y = 10;
+	scoreText->x = SCREEN_WIDTH - 50;
+
+	scoreText->drawObject();
+
+}
+
+void playerClass::addScore(int points) { 
+	score += points;
 }

@@ -5,6 +5,7 @@ bulletClass::bulletClass(int startX, int startY) {
 	
 	objectTexture = LoadImage("data\\bullet.png");
 	
+	objectType = "bullet";
 
 	// Set deletion flag
 	deleteThis = false;
@@ -25,7 +26,7 @@ bulletClass::bulletClass(int startX, int startY) {
 int bulletClass::updatePosition() {
 
 	
-	x += 5;
+	x += 10;
 
 	if (x > 640)
 		deleteThis = true;

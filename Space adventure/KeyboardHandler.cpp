@@ -56,8 +56,8 @@ void KeyboardHandler::handleKeyboardEvents(playerClass& playerObj, rendererClass
 				// Spawns enemy, for debug
 				case SDLK_e:
 				{
-					Enemy::enemyType eType = Enemy::DORP;
-					renderer.pushIntoRenderQueue(new Enemy(eType));
+					// Debug - spawn enemy
+					renderer.pushIntoRenderQueue(new Enemy(Enemy::MORP,200));
 					break;
 				}
 				default:

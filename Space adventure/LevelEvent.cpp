@@ -28,6 +28,12 @@ gameObject* LevelEvent::fireEvent() {
 
 		return returnedObject;
 	}
+	else if (eventType == "MORP") {
+		returnedObject = new Enemy(Enemy::MORP);
+		returnedObject->x = 680;
+		returnedObject->y = eventY;
 
+		return returnedObject;
+	}
 
 }

@@ -36,7 +36,7 @@ Animation::Animation(std::string filePath, int frames, int frameRows, int animRa
 		}
 	}
 	
-	// Splitting the sheet causes makes one empty
+	// Splitting the sheet makes one empty
 	// frame, so remove that index
 	totalFrames--;
 

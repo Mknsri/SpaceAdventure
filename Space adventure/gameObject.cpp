@@ -72,3 +72,5 @@ bool gameObject::checkCollision(gameObject * collObject) {
 int gameObject::collisionEvent() {
 	return 0;
 }
+
+void gameObject::addScore(int points) {}
