@@ -36,4 +36,14 @@ gameObject* LevelEvent::fireEvent() {
 		return returnedObject;
 	}
 
+	else if (eventType == "BENE") {
+		returnedObject = new Enemy(Enemy::BENE);
+		returnedObject->x = 680;
+		returnedObject->y = eventY;
+
+		return returnedObject;
+	}
+	else
+		return nullptr;
+
 }

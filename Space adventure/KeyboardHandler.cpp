@@ -57,7 +57,7 @@ void KeyboardHandler::handleKeyboardEvents(playerClass& playerObj, rendererClass
 				case SDLK_e:
 				{
 					// Debug - spawn enemy
-					renderer.pushIntoRenderQueue(new Enemy(Enemy::MORP,200));
+					renderer.pushIntoRenderQueue(new Enemy(Enemy::BENE,200));
 					break;
 				}
 				default:

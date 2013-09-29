@@ -119,9 +119,5 @@ void Level::playLevel(rendererClass &renderer) {
 		}
 		else
 			it++;
-
 	}
-	
-
-
 }

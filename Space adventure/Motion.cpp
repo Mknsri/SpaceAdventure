@@ -28,7 +28,7 @@ int Motion::waveMotion(int startingPosition, int waveRange, int waveDuration) {
 	}
 	else
 	{
-		stepSize++;
+		stepSize += 1;
 	}
 
 	// After half the frames have passed, switch direction

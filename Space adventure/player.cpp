@@ -3,7 +3,7 @@
 playerClass::playerClass() {
 
 	// Load the textures for player
-	objectTexture = LoadImage("data\\kalalus.png");
+	objectTexture = nullptr;
 	playerHealthIcon = LoadImage("data\\health.png");
 
 	// Load player animations
@@ -14,6 +14,10 @@ playerClass::playerClass() {
 	// Set player health
 	health = 3;
 	alive = true;
+
+	// Collision box
+	collBoxH = 50;
+	collBoxW = 70;
 
 	// Collisionbuffer, the pixel amount the collisionbox 
 	// is feathered from the actual texture size
@@ -40,7 +44,7 @@ playerClass::playerClass() {
 	deleteThis = false;
 
 	// Max speed
-	maxSpeed = 5;
+	maxSpeed = 6;
 	
 	// Enable collision
 	collisionEnabled = true;
@@ -48,7 +52,7 @@ playerClass::playerClass() {
 
 
 	// Set score
-	score = 10;
+	score = 0;
 	
 	scoreText = new textClass();
 

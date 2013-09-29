@@ -18,12 +18,19 @@ Enemy::Enemy(enemyType eType, int startY)
 		case MORP:
 			objectTexture = LoadImage("data\\morp.png");
 			pointWorth = 10;
+			enemyAnim = nullptr;
 		break;
 		case DORP:
 			objectTexture = LoadImage("data\\dorp.png");
 			pointWorth = 20;
+			enemyAnim = nullptr;
 		break;
 		case BENE:
+			objectTexture = nullptr;
+			pointWorth = 40;
+			enemyAnim = new Animation("data\\bene.png",2,0,12);
+			collBoxH = 40;
+			collBoxW = 40;
 		break;
 		case MONSTRO:
 		break;
@@ -54,6 +61,20 @@ Enemy::~Enemy(void)
 {
 }
 
+int Enemy::drawObject() {
+
+	// Animated enemy
+	if (objectTexture == nullptr && enemyAnim != nullptr) {
+		enemyAnim->x = x;
+		enemyAnim->y = y;
+		enemyAnim->playAnimation();
+	}
+	else {
+		ApplySurface(x,y,objectTexture);
+	}
+
+	return 0;
+}
 
 int Enemy::updatePosition() {
 
@@ -72,9 +93,12 @@ int Enemy::updatePosition() {
 	case Enemy::DORP:
 
 		// Move enemy to the left
-		x -= 5;
+		x -= 4;
 		break;
 	case Enemy::BENE:
+
+		x -= 4;
+
 		break;
 	case Enemy::MONSTRO:
 		break;

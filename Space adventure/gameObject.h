@@ -35,6 +35,8 @@ class gameObject
 		
 		// Rectangle to hold height and width
 		SDL_Rect collisionBox;
+		// If using animations, need manual collision box size
+		int collBoxH, collBoxW;
 
 		// Collision buffer - makes collision boxes
 		// smaller by its value by pixel

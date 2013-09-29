@@ -18,6 +18,9 @@ public:
 	
 	// Death animation
 	Animation *explosionAnim;
+
+	// Animation for enemy
+	Animation *enemyAnim;
 	
 	// Motions for enemies
 	Motion morpMotion;
@@ -35,6 +38,9 @@ public:
 
 	// Update per frame
 	int updatePosition();
+
+	// Draws enemy - inherited from gameObject
+	int drawObject();
 };
 
 

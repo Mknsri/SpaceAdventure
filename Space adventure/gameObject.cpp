@@ -23,7 +23,14 @@ bool gameObject::checkCollision(gameObject * collObject) {
 	collisionBox.x = x;
 	collisionBox.y = y;
 
-    SDL_QueryTexture(objectTexture, NULL, NULL, &collisionBox.w, &collisionBox.h);
+	if (objectTexture != nullptr) {
+		SDL_QueryTexture(objectTexture, NULL, NULL, &collisionBox.w, &collisionBox.h);
+	}
+	else
+	{
+		collisionBox.h = collBoxH;
+		collisionBox.w = collBoxW;
+	}
 
 	// buffer collisionbox
 	collisionBox.w -= collisionBuffer;
