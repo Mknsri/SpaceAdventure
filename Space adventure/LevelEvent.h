@@ -1,6 +1,9 @@
 #ifndef LEVEL_EVENT_H
 #define LEVEL_EVENT_H
 
+#include "PowerUp.h"
+#include "bulletClass.h"
+#include "player.h"
 #include "gameObject.h"
 #include "Enemy.h"
 
