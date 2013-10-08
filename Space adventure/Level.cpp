@@ -3,7 +3,14 @@
 
 Level::Level(void)
 {
+	playerObject = new playerClass;
 	levelTimer = new Timer();
+	bossObject = new gameObject;
+
+	levelCompleted = false;
+	levelStarted = false;
+	levelPaused = false;
+
 }
 
 
@@ -64,11 +71,6 @@ void Level::loadLevel(std::string fileName) {
 
 		}
 	}
-
-
-	
-
-
 }
 
 void Level::loadAsset(std::string assetName, std::string assetPath) {
@@ -84,7 +86,6 @@ void Level::loadAsset(std::string assetName, std::string assetPath) {
 		backgroundAnimation2->x = 0;
 		backgroundAnimation2->y = 0;
 	}
-
 }
 
 
@@ -98,26 +99,86 @@ void Level::initLevel() {
 		levelTimer->Start();
 	}
 
+	// Initiate player object
+	playerObject->newGame();
+	
+	LEventRuntime = LEvent;
+
 }
 
-void Level::playLevel(rendererClass &renderer) {
-	
+bool Level::playLevel(rendererClass &renderer) {
+
+	// Start drawing the player once
+	if (levelStarted == false) {
+		renderer.pushIntoRenderQueue(playerObject);
+		levelStarted = true;
+	}
+
 	// Play the backgrounds
 	backgroundAnimation->scrollAnimation(backgroundAnimation->LEFT);
 	backgroundAnimation2->scrollAnimation(backgroundAnimation2->LEFT);
 
 	// Loop through game-events, and trigger by time code
-	// Iterators
+	// Iterator
 	std::vector<LevelEvent*>::iterator it;
 
-	for(it = LEvent.begin(); it != LEvent.end();) {
-		// Draw all objects
-		if ( (*it)->eventTime < levelTimer->getTicks() ) {
-			gameObject* ebin = (*it)->fireEvent();
-			renderer.pushIntoRenderQueue(ebin);
-			it = LEvent.erase(it);
+	if (!levelPaused) {
+		for(it = LEventRuntime.begin(); it != LEventRuntime.end();) {
+			if ( (*it)->eventTime < levelTimer->getTicks() ) {
+				if ((*it)->eventType != "COMPLETE") {
+
+			
+					gameObject* ebin = (*it)->fireEvent();
+					if ((*it)->eventType == "MONSTRO") {
+						bossObject = ebin;
+					}
+					renderer.pushIntoRenderQueue(ebin);
+					it = LEventRuntime.erase(it);
+				}
+				else {
+					levelCompleted = true;
+					it = LEventRuntime.erase(it);
+				}
+			}
+			else
+				it++;
 		}
-		else
-			it++;
 	}
+
+	// Random powerup check
+	// Start counting once 15 secs has passed of level
+	if (levelTimer->getTicks() > 15000) {
+		std::random_device rng;
+		int randomNumber = rng() % 50000;
+
+		if (randomNumber > 0 && randomNumber < 3) {
+			renderer.pushIntoRenderQueue(new PowerUp(PowerUp::HEALTH));
+		}
+		else if (randomNumber > 4 && randomNumber < 8 ) {
+			renderer.pushIntoRenderQueue(new PowerUp(PowerUp::MULTIFIRE));
+		}
+		else if (randomNumber > 8 && randomNumber < 12) {
+			renderer.pushIntoRenderQueue(new PowerUp(PowerUp::TRIAMMO));
+		}
+
+
+	}
+
+
+	// End check
+	if (playerObject->isPlayerAlive() == false || bossObject->health == -100 || levelCompleted == true) {
+		levelPaused = true;
+		if (bossObject->health == -100) {
+			levelCompleted = true;
+		}
+		return false;
+	}
+	if (bossObject->health < 1) {
+		levelPaused = true;
+		return true;
+	}
+	else {
+		return true;
+	}
+
 }

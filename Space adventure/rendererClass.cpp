@@ -39,15 +39,62 @@ void rendererClass::handleLogicQueue() {
 						// Add scores if bullet and enemy collide
 						if ((*it)->objectType == "bullet" && (*collIt)->objectType == "enemy") {
 							scroreToBeAdded += (*collIt)->pointWorth;
+							(*collIt)->getObject((*it));
 						}
 						else if ((*it)->objectType == "enemy" && (*collIt)->objectType == "bullet") {
 							scroreToBeAdded += (*it)->pointWorth;
+							(*it)->getObject((*collIt));
 						}
-
-						// Do collision events for both object
-						(*it)->collisionEvent();
-						(*collIt)->collisionEvent();
+						
+						// Check for powerup collisions
+						if ((*it)->objectType == "player" && (*collIt)->objectType == "powerup") {
+							// Add health
+							if ((*collIt)->pointWorth == 500) {
+								(*it)->health++;
+							}
+							else if ((*collIt)->pointWorth == 100) {
+								(*it)->setPowerUp(gameObject::POWERUP_TRIAMMO);
+							}
+							else if ((*collIt)->pointWorth == 250) {
+  								(*it)->setPowerUp(gameObject::POWERUP_MULTIFIRE);
+							}
+							(*collIt)->collisionEvent();
+						}
+						else if ((*it)->objectType == "powerup" && (*collIt)->objectType == "player") {
+							// Add health
+							if ((*it)->pointWorth == 500) {
+								(*collIt)->health++;
+							}
+							else if ((*it)->pointWorth == 100) {
+								(*collIt)->setPowerUp(gameObject::POWERUP_TRIAMMO);
+							}
+							else if ((*it)->pointWorth == 250) {
+  								(*collIt)->setPowerUp(gameObject::POWERUP_MULTIFIRE);
+							}
+							(*it)->collisionEvent();
+						}
+						// Disable powerup and bullet/enemy collisions
+						else if (((*it)->objectType == "bullet" && (*collIt)->objectType == "powerup") || 
+								((*it)->objectType == "powerup" && (*collIt)->objectType == "bullet") || 
+								((*it)->objectType == "powerup" && (*collIt)->objectType == "enemy") || 
+								((*it)->objectType == "enemy" && (*collIt)->objectType == "powerup")) {}
+						else {
+							// Do collision events for both object
+							(*it)->collisionEvent();
+							(*collIt)->collisionEvent();
+						}
 					}
+				}
+			}	
+			// Give player object data to enemy if needed
+			if ((*it)->objectType == "enemy" && (*collIt)->objectType == "player") {
+				if ((*it)->pointWorth > 20) {
+					(*it)->getObject(*collIt);
+				}
+			}
+			else if ((*it)->objectType == "player" && (*collIt)->objectType == "enemy") {
+				if ((*collIt)->pointWorth > 20) {
+					(*collIt)->getObject(*it);
 				}
 			}
 		}

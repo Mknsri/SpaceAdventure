@@ -2,6 +2,7 @@
 #define LEVEL_H
 
 #include "DataHandler.h"
+#include "player.h"
 #include "gameObject.h"
 #include "Enemy.h"
 #include "Animation.h"
@@ -12,6 +13,7 @@
 #include <fstream>
 #include <iostream>
 #include <string>
+#include <random>
 
 
 class Level
@@ -26,9 +28,14 @@ class Level
 
 		// Event vector, loaded at init
 		// And looped while playing
+		std::vector<LevelEvent *> LEventRuntime;
+
+		// Original vector
 		std::vector<LevelEvent *> LEvent;
 
-
+		bool levelStarted;
+		bool levelCompleted;
+		bool levelPaused;
 
 		// 2 animations for parallax effect
 		Animation* backgroundAnimation;
@@ -47,7 +54,11 @@ class Level
 		void loadLevel(std::string fileName);
 
 		// Loop level - manipulates renderer
-		void playLevel(rendererClass &renderer);
+		bool playLevel(rendererClass &renderer);
+
+		// Player object
+		playerClass* playerObject;
+		gameObject* bossObject;
 
 };
 

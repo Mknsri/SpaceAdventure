@@ -17,6 +17,8 @@ public:
 	// If user leaves game
 	bool quitPressed;
 	
+	Uint32 timeSinceLastUpdate;
+
 	KeyboardHandler(void);
 	~KeyboardHandler(void);
 

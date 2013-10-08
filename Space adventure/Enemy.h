@@ -1,6 +1,8 @@
 #ifndef ENEMY_H
 #define ENEMY_H
 
+#include "bulletClass.h"
+#include "player.h"
 #include "gameobject.h"
 #include "Animation.h"
 #include "Motion.h"
@@ -16,6 +18,12 @@ public:
 	enum enemyType { MORP, DORP, BENE, MONSTRO };
 	enemyType enType;
 	
+	// Player position integers for player affected behaviour
+	int targetObjX, targetObjY;
+
+	SDL_Texture* bossIdle;
+	SDL_Texture* bossHurt;
+
 	// Death animation
 	Animation *explosionAnim;
 
@@ -28,10 +36,12 @@ public:
 	// ranges for animations
 	int upRange, downRange;
 
-
 	// Constructor, enemy type as parameter and optional start position
 	Enemy(enemyType eType, int startY = 0);
 	~Enemy(void);
+
+	void getObject(gameObject* obj);
+
 
 	// Collision event
 	int collisionEvent();

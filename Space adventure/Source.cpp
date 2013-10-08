@@ -1,3 +1,4 @@
+#include "HighScore.h"
 #include "player.h"
 #include "draw.h"
 #include "bulletClass.h"
@@ -43,9 +44,8 @@ int main(int argc, char** argv){
 	
 	// Game classes
 	rendererClass gameRenderer;
-	playerClass* playerObject = new playerClass;
 	KeyboardHandler keyboard;
-
+	HighScore highscore;
 
 	// FPS capper
 	Timer frameTimer;
@@ -58,7 +58,7 @@ int main(int argc, char** argv){
 	// Notification text object
 	std::stringstream notificationText;
 	textClass notification;
-	notification.x = 120;
+	notification.x = 180;
 	notification.y = 120;
 
 	//Debug
@@ -69,9 +69,11 @@ int main(int argc, char** argv){
 
 
 	// end debug
-
 	Level level1;
-	level1.loadLevel("data\\level1.dat");
+	level1.loadLevel("data\\test.dat");
+
+	
+	highscore.readHighScoreFile("data\\score.dat");
 
 
 	while(keyboard.quitPressed == false && quit == false) {	
@@ -93,17 +95,11 @@ int main(int argc, char** argv){
 				// Check if the user presses Enter to start a game
 				if(keyboard.isPressed(SDL_SCANCODE_RETURN)) {
 					gameState = 1;
-					// Start drawing player
-					gameRenderer.pushIntoRenderQueue(playerObject);
 				}
 				break;
 			// Start new game
 			case 1: 
 			{
-				// Start drawing player
-				playerObject->newGame();
-				playerObject->fireDisabled = false;
-				
 				// Start level
 				level1.initLevel();
 				
@@ -113,26 +109,27 @@ int main(int argc, char** argv){
 			// Start game
 			case 2:
 			{
-				level1.playLevel(gameRenderer);
-
-				playerObject->displayScore();
-
-				if (playerObject->isPlayerAlive() == false) {
-					gameState = 3;
+				
+				if (!level1.playLevel(gameRenderer)) {
+					if (level1.levelCompleted == true) {
+						gameState = 4;
+					}
+					else {
+						gameState = 3;
+					}
 				}
 
 				break;
 			}
 			// Death screen
 			case 3:
-				// Disable player fire
-				playerObject->fireDisabled = true;
 
 				// Set you are dead text
 				notificationText.str("");
 				notificationText << "You are dead! Play again? ( Y / N )";
 				notification.setMessage(notificationText);
 				notification.drawObject();
+				highscore.displayHighScore();
 
 				if(keyboard.isPressed(SDL_SCANCODE_Y)) {
 					gameState = 1;
@@ -142,6 +139,32 @@ int main(int argc, char** argv){
 				}
 
 				break;
+			// Level1  complete
+			case 4:
+				notificationText.str("");
+				notificationText << "Level complete! Press enter for level 2 ";
+				notification.setMessage(notificationText);
+				notification.drawObject();
+
+				if(keyboard.isPressed(SDL_SCANCODE_RETURN)) {
+					gameState = 5;
+				}
+				else if (keyboard.isPressed(SDL_SCANCODE_N)) {
+					quit = true;
+				}
+			// Level 2
+			case 5:
+				break;
+			// Level 2 complete
+			case 6:
+				break;
+			// Level 3
+			case 7:
+				break;
+			// Game complete
+			case 8:
+				break;
+
 			default:
 				break;
 		}
@@ -154,7 +177,7 @@ int main(int argc, char** argv){
 		}
 		
 		// Handle keyboard for player
-		keyboard.handleKeyboardEvents(*playerObject, gameRenderer);
+		keyboard.handleKeyboardEvents(*level1.playerObject, gameRenderer);
 
 		// Draw all the gameObjects
 		gameRenderer.drawRenderQueue();

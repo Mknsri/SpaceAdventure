@@ -22,12 +22,25 @@ class gameObject
 		// Type for collision ignoring
 		std::string objectType;
 
+		// power up settings - only used by player
+		// but defined in gameobject since im dumb
+		int activePowerUps;
 		
+		enum powerUps {
+			POWERUP_MULTIFIRE = 0x01,
+			POWERUP_TRIAMMO = 0x02,
+		};
+
+		Uint32 pupStartTime;
+		Uint32 pupStartTime2;
+
 		// Point worth
 		int pointWorth;
 
 		// Position integers
 		int x, y;
+		
+		int health;
 
 		// Speed integers
 		int xVelocity, yVelocity;
@@ -48,6 +61,9 @@ class gameObject
 		
 		// Check collision with this object and parameter object
 		bool checkCollision(gameObject* collObject);
+		
+		// Custom collision, if enabled, need to set collisionbox using collisionbox.h / .w
+		bool customCollision;
 
 		// Checked if collision returns true
 		virtual int collisionEvent();
@@ -61,7 +77,11 @@ class gameObject
 		// Add to players score
 		virtual void addScore(int points);
 
-
+		virtual void getObject(gameObject* obj);
+		virtual void setTarget(int targetY);
+		virtual void setPowerUp(powerUps powerup);
+		virtual bool checkPowerUp(powerUps powerup);
+		
 };
 
 #endif

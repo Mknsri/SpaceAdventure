@@ -1,6 +1,6 @@
 #include "gameObject.h"
 
-gameObject::gameObject(void) { deleteThis = false; }
+gameObject::gameObject(void) { deleteThis = false; health = 1; customCollision = false; }
 
 
 gameObject::~gameObject(void) {}
@@ -23,10 +23,10 @@ bool gameObject::checkCollision(gameObject * collObject) {
 	collisionBox.x = x;
 	collisionBox.y = y;
 
-	if (objectTexture != nullptr) {
+	if (objectTexture != nullptr && !customCollision) {
 		SDL_QueryTexture(objectTexture, NULL, NULL, &collisionBox.w, &collisionBox.h);
 	}
-	else
+	else if (collBoxH > 0 && collBoxW > 0)
 	{
 		collisionBox.h = collBoxH;
 		collisionBox.w = collBoxW;
@@ -80,4 +80,9 @@ int gameObject::collisionEvent() {
 	return 0;
 }
 
+// Virtual functions
 void gameObject::addScore(int points) {}
+void gameObject::getObject(gameObject* obj) {}
+void gameObject::setTarget(int targetY) {}
+void gameObject::setPowerUp(powerUps powerup) {}
+bool gameObject::checkPowerUp(powerUps powerup) { return false; }

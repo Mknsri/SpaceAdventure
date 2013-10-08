@@ -73,11 +73,13 @@
     <ClCompile Include="draw.cpp" />
     <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="gameObject.cpp" />
+    <ClCompile Include="HighScore.cpp" />
     <ClCompile Include="KeyboardHandler.cpp" />
     <ClCompile Include="Level.cpp" />
     <ClCompile Include="LevelEvent.cpp" />
     <ClCompile Include="Motion.cpp" />
     <ClCompile Include="player.cpp" />
+    <ClCompile Include="PowerUp.cpp" />
     <ClCompile Include="rendererClass.cpp" />
     <ClCompile Include="Source.cpp" />
     <ClCompile Include="textClass.cpp" />
@@ -90,11 +92,13 @@
     <ClInclude Include="draw.h" />
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="gameObject.h" />
+    <ClInclude Include="HighScore.h" />
     <ClInclude Include="KeyboardHandler.h" />
     <ClInclude Include="Level.h" />
     <ClInclude Include="LevelEvent.h" />
     <ClInclude Include="Motion.h" />
     <ClInclude Include="player.h" />
+    <ClInclude Include="PowerUp.h" />
     <ClInclude Include="rendererClass.h" />
     <ClInclude Include="textClass.h" />
     <ClInclude Include="Timer.h" />

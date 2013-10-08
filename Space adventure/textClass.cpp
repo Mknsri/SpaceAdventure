@@ -46,7 +46,7 @@ void textClass::setMessage(std::stringstream &message, bool appendText) {
 	textMessage = message.str();
 	
 	//Render the message to an SDL_Surface, as that's what TTF_RenderText_X returns
-    textSurface = TTF_RenderText_Blended(font, textMessage.c_str(), textColor);
+    textSurface = TTF_RenderText_Blended_Wrapped(font, textMessage.c_str(), textColor,400);
     objectTexture = surfaceIntoTexture(textSurface);
 }
 

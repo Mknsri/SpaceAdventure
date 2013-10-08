@@ -16,6 +16,7 @@ playerClass::playerClass() {
 	alive = true;
 
 	// Collision box
+	customCollision = true;
 	collBoxH = 50;
 	collBoxW = 70;
 
@@ -28,6 +29,7 @@ playerClass::playerClass() {
 	y = 35;
 
 	objectType = "player";
+
 
 	// Animation position
 	playerAnimIdle->x = x;
@@ -55,6 +57,9 @@ playerClass::playerClass() {
 	score = 0;
 	
 	scoreText = new textClass();
+
+	pupStartTime = 0;
+	pupStartTime2 = 0;
 
 
 }
@@ -135,6 +140,9 @@ int playerClass::drawObject() {
 		ApplySurface(i * 20, 10, playerHealthIcon);
 	}
 
+	// Draw score
+	this->displayScore();
+
 	return 0;
 }
 
@@ -155,6 +163,11 @@ void playerClass::playerDeath() {
 		alive = false;
 	}
 
+	// Stop the player
+	xVelocity = 0;
+	yVelocity = 0;
+
+
 
 }
 
@@ -164,8 +177,8 @@ void playerClass::newGame() {
 	alive = true;
 
 	// Init position
-	x = 35;
-	y = 35;
+	x = 30;
+	y = 200;
 
 	// Reset animations
 	playerAnimIdle->x = x;
@@ -177,8 +190,10 @@ void playerClass::newGame() {
 	xVelocity = 0;
 	yVelocity = 0;
 
-	// Disable player fire in title screen
-	fireDisabled = true;
+	score = 0;
+
+	// Enable player
+	fireDisabled = false;
 
 	// Enable collision
 	collisionEnabled = true;
@@ -202,4 +217,52 @@ void playerClass::displayScore() {
 
 void playerClass::addScore(int points) { 
 	score += points;
+}
+
+void playerClass::setPowerUp(powerUps powerup) {
+
+	if (powerup & gameObject::POWERUP_TRIAMMO) {
+		activePowerUps |= powerup;
+		if (pupStartTime == 0) {
+			pupStartTime = SDL_GetTicks() + 10000;
+		}
+		else {
+			pupStartTime += 10000;
+		}
+	}
+	else if (powerup & gameObject::POWERUP_MULTIFIRE) {
+		activePowerUps |=  powerup;
+		if (pupStartTime2 == 0) {
+			pupStartTime2 = SDL_GetTicks() + 10000;
+		}
+		else {
+			pupStartTime2 += 10000;
+		}
+		
+	}
+}
+
+bool playerClass::checkPowerUp(powerUps powerup) {
+	if(powerup & POWERUP_TRIAMMO) {
+		if (activePowerUps & powerup && pupStartTime > SDL_GetTicks()) {
+			return true;
+		}
+		else {
+			// if check fails, remove the bit flag
+			activePowerUps = activePowerUps & ~powerup;
+			return false;
+		}
+	}
+	else if (powerup & POWERUP_MULTIFIRE) {
+		if (activePowerUps & powerup && pupStartTime2 > SDL_GetTicks()) {
+ 			return true;
+		}
+		else {
+			// if check fails, remove the bit flag
+			activePowerUps = activePowerUps & ~powerup;
+			return false;
+		}
+	}
+
+	return false;
 }

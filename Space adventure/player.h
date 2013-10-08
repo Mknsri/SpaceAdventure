@@ -10,10 +10,10 @@ class playerClass : public gameObject
 {
 	private:
 		// Stats
-		int health;
 		bool alive;
 		int score;
 		
+	
 		// Player score text
 		textClass *scoreText;
 
@@ -45,6 +45,9 @@ class playerClass : public gameObject
 
 		// Check if player is alive
 		bool isPlayerAlive();
+
+		void setPowerUp(powerUps powerup);
+		bool checkPowerUp(powerUps powerup);
 
 		void newGame();
 
